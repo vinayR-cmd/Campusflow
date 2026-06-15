@@ -66,6 +66,7 @@ app.include_router(profile_leaderboard_router, prefix="/api/profile")
 
 
 @app.get("/health")
+@app.head("/health")
 def health():
     supabase_status = "connected"
     try:
