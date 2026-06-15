@@ -371,5 +371,10 @@ def get_attendance_api(username: str, password: str = "student123"):
         "attendance": attendance_data
     }
 
+@app.get("/health")
+@app.head("/health")
+def health():
+    return {"status": "ok", "service": "CampusFlow Mock ERP"}
+
 if __name__ == "__main__":
     uvicorn.run("main:app", host="127.0.0.1", port=8001, reload=True)
