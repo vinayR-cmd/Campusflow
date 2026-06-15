@@ -31,13 +31,18 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="CampusFlow API", lifespan=lifespan)
 
+import os
+allowed_origins_str = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000")
+allowed_origins = [origin.strip() for origin in allowed_origins_str.split(",")]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+print(f"CORS allowed origins: {allowed_origins}")
 
 app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(timetable.router, prefix="/api/timetable", tags=["timetable"])
